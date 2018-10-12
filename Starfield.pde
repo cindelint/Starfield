@@ -8,14 +8,16 @@ void setup() {
     bobert[i] = new NormalParticle(250,250);
   }
   bobert[0] = new OddballParticle();
-  bobert[1] = new JumboParticle();
+  bobert[1] = new JumboParticle(250,250);
 }
 
 void draw() {
   background(0);
   for (int i=0; i<bobert.length; i++) {
+    pushMatrix();
     bobert[i].show();
     bobert[i].move();
+    popMatrix();
   }
 }
 
@@ -34,18 +36,17 @@ class NormalParticle implements Particle{
     pColor = color((int) (Math.random()*70+185), (int) (Math.random()*70+185), (int) (Math.random()*70+185));
   }
   public void show() {
-    pushMatrix();
     translate(startX, startY);
     rotate((float) angle);
     fill(pColor, (float) (xPos*1.2+10));
     ellipse((float) xPos, (float) yPos, 4, 4);
-    popMatrix();
   }
   public void move() {
     xPos += speed;
     if (xPos > 350) {
       xPos = 0;
       speed = Math.random() * 4 + 1;
+      angle = Math.random() * 2 * Math.PI;
     }
   }
 }
@@ -74,12 +75,11 @@ class OddballParticle implements Particle { //uses an interface
 }
 
 class JumboParticle extends NormalParticle{ //uses inheritance
+  JumboParticle(int x, int y) {
+    super(x, y);
+  }
   public void show() {
-    pushMatrix();
-    translate(startX, startY);
-    rotate((float) angle);
-    fill(pColor, (float) (xPos*1.2+10));
-    ellipse((float) xPos, (float) yPos, 10, 10);
-    popMatrix();
+    super.show();
+    ellipse((float) xPos, (float) yPos, 30,30);
   }
 }
