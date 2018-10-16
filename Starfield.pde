@@ -8,7 +8,9 @@ void setup() {
     bobert[i] = new NormalParticle(250,250);
   }
   bobert[0] = new OddballParticle();
-  bobert[1] = new JumboParticle(250,250);
+  for (int i=1; i<4; i++) {
+    bobert[i] = new JumboParticle(250,250);
+  }
 }
 
 void draw() {
@@ -22,11 +24,11 @@ void draw() {
 }
 
 class NormalParticle implements Particle{
-  public double xPos, yPos;
-  public color pColor;
-  public double angle, speed;
-  public int startX, startY;
-  public float size;
+  float xPos, yPos;
+  color pColor;
+  double angle, speed;
+  int startX, startY;
+  float size;
   NormalParticle(int x, int y) {
     xPos = (int) (Math.random() * width/2);
     yPos = 0;
@@ -40,8 +42,9 @@ class NormalParticle implements Particle{
   public void show() {
     translate(startX, startY);
     rotate((float) angle);
-    fill(pColor, (float) (xPos*1.2+10));
-    ellipse((float) xPos, (float) yPos, size, size);
+    fill(pColor, (xPos*1.2+10));
+    noStroke();
+    ellipse(xPos, yPos, size, size);
   }
   public void move() {
     xPos += speed;
@@ -61,8 +64,8 @@ interface Particle {
 }
 
 class OddballParticle implements Particle { //uses an interface
-  public double xPos, yPos;
-  public color pColor;
+  float xPos, yPos;
+  color pColor;
   OddballParticle() {
     xPos = 250;
     yPos = 400;
@@ -73,25 +76,59 @@ class OddballParticle implements Particle { //uses an interface
     yPos += Math.random() * 2 - 1;
   }
   public void show() {
-    fill(pColor, 100);
-    ellipse((float) xPos, (float) yPos, 20, 20);
+    fill(pColor, 200);
+    stroke(20, 160);
+    strokeWeight(1);
+    ellipse(xPos, yPos, 35, 13);
+
+    fill(183, 228, 232, 145);
+    stroke(20, 160);
+    strokeWeight(1);
+    beginShape();
+    arc(xPos, yPos-4, 20, 5, 0, PI);
+    arc(xPos, yPos-4, 20, 16, PI, 2*PI);
+    endShape();
+
+    fill(15, 102, 2, 100);
+    beginShape();
+    arc(xPos-2, yPos-3, 7, 4, 0, PI);
+    arc(xPos-2, yPos-3, 7, 10, PI, 2*PI);
+    endShape();
+    fill(20, 100);
+    ellipse(xPos-2, yPos-3, 2, 3);
+    ellipse(xPos+2, yPos-3, 2, 3);
+
+    fill(175, 150);
+    stroke(20, 100);
+    ellipse(xPos-12, yPos, 3, 3);
+    ellipse(xPos-4, yPos+2, 3, 3);
+    ellipse(xPos+4, yPos+2, 3, 3);
+    ellipse(xPos+12, yPos, 3, 3);
   }
 }
 
 class JumboParticle extends NormalParticle{ //uses inheritance
+  int ringNum;
   JumboParticle(int x, int y) {
     super(x, y);
     pColor = randColor();
+    ringNum = (int) (Math.random()*3);
   }
   public void show() {
     super.show();
+    if (ringNum != 0) {
+      stroke(255, xPos*1.2);
+      noFill();
+      strokeWeight(ringNum);
+      arc(xPos, yPos, size/0.9, size/3, 5*PI/6, 13*PI/6);
+    }
     if (xPos==0) {
-      pColor = color(randColor(), 150);
+      pColor = color(randColor(), 175);
       size = (float) (Math.random() * 10 + 15);
     }
   }
 }
 
 color randColor() {
-  return color((int) (Math.random()*255), (int) (Math.random()*255), (int) (Math.random()*255));
+  return color((int) (Math.random()*150+50), (int) (Math.random()*150+50), (int) (Math.random()*150+50));
 }
