@@ -94,9 +94,7 @@ class OddballParticle implements Particle { //uses an interface
     arc(xPos-2, yPos-3, 7, 4, 0, PI);
     arc(xPos-2, yPos-3, 7, 10, PI, 2*PI);
     endShape();
-    fill(20, 100);
-    ellipse(xPos-2, yPos-3, 2, 3);
-    ellipse(xPos+2, yPos-3, 2, 3);
+    //eyes
 
     fill(175, 150);
     stroke(20, 100);
