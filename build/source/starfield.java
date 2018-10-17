@@ -21,11 +21,11 @@ public void setup() {
   noStroke();
   bobert = new Particle[130];
   for (int i=0; i<bobert.length; i++) {
-    bobert[i] = new NormalParticle(250,250);
+    bobert[i] = new NormalParticle(width/2, height/2);
   }
   bobert[0] = new OddballParticle();
   for (int i=1; i<4; i++) {
-    bobert[i] = new JumboParticle(250,250);
+    bobert[i] = new JumboParticle(width/2, height/2);
   }
 }
 
@@ -64,8 +64,17 @@ class NormalParticle implements Particle{
   }
   public void move() {
     xPos += speed;
-    size += size/500;
-    if (xPos > 400) {
+    size += size/600;
+    if (keyPressed) {
+      if (keyCode == UP) {
+        speed += .1f;
+      } else if (keyCode == RIGHT) {
+        angle += .01f;
+      } else if (keyCode == LEFT) {
+        angle -= .01f;
+      }
+    }
+    if (xPos > 500) {
       xPos = 0;
       size = (float) (Math.random() * 3 + 1.5f);
       speed = Math.random() * 4 + 1;
@@ -83,13 +92,13 @@ class OddballParticle implements Particle { //uses an interface
   float xPos, yPos;
   int pColor;
   OddballParticle() {
-    xPos = 250;
+    xPos = 300;
     yPos = 400;
     pColor = randColor();
   }
   public void move() {
-    xPos += Math.random() * 2 - 1;
-    yPos += Math.random() * 2 - 1;
+    xPos += Math.random() * 4 - 2;
+    yPos += Math.random() * 4 - 2;
   }
   public void show() {
     //spaceship body
@@ -109,14 +118,13 @@ class OddballParticle implements Particle { //uses an interface
 
     //alien body
     fill(15, 102, 2, 140);
-    strokeWeight(0);
+    noStroke();
     beginShape();
     arc(xPos-2, yPos-3, 8, 4, 0, PI);
     arc(xPos-2, yPos-3, 8, 14, PI, 2*PI);
     endShape();
     //alien eyes
     fill(20, 140);
-    noStroke();
     ellipse(xPos-4, yPos-5.5f, 2, 3);
     ellipse(xPos-1.5f, yPos-5.5f, 2, 3);
 
@@ -153,9 +161,9 @@ class JumboParticle extends NormalParticle{ //uses inheritance
 }
 
 public int randColor() {
-  return color((int) (Math.random()*130+50), (int) (Math.random()*130+50), (int) (Math.random()*130+50));
+  return color((int) (Math.random()*150+50), (int) (Math.random()*150+50), (int) (Math.random()*150+50));
 }
-  public void settings() {  size(500,500); }
+  public void settings() {  size(600,600); }
   static public void main(String[] passedArgs) {
     String[] appletArgs = new String[] { "starfield" };
     if (passedArgs != null) {
