@@ -76,11 +76,13 @@ class OddballParticle implements Particle { //uses an interface
     yPos += Math.random() * 2 - 1;
   }
   public void show() {
+    //spaceship body
     fill(pColor, 200);
     stroke(20, 160);
     strokeWeight(1);
     ellipse(xPos, yPos, 35, 13);
 
+    //spaceship window
     fill(183, 228, 232, 145);
     stroke(20, 160);
     strokeWeight(1);
@@ -89,13 +91,20 @@ class OddballParticle implements Particle { //uses an interface
     arc(xPos, yPos-4, 20, 16, PI, 2*PI);
     endShape();
 
-    fill(15, 102, 2, 100);
+    //alien body
+    fill(15, 102, 2, 140);
+    strokeWeight(0);
     beginShape();
-    arc(xPos-2, yPos-3, 7, 4, 0, PI);
-    arc(xPos-2, yPos-3, 7, 10, PI, 2*PI);
+    arc(xPos-2, yPos-3, 8, 4, 0, PI);
+    arc(xPos-2, yPos-3, 8, 14, PI, 2*PI);
     endShape();
-    //eyes
+    //alien eyes
+    fill(20, 140);
+    noStroke();
+    ellipse(xPos-4, yPos-5.5, 2, 3);
+    ellipse(xPos-1.5, yPos-5.5, 2, 3);
 
+    //additiosn to spaceship
     fill(175, 150);
     stroke(20, 100);
     ellipse(xPos-12, yPos, 3, 3);
@@ -115,18 +124,18 @@ class JumboParticle extends NormalParticle{ //uses inheritance
   public void show() {
     super.show();
     if (ringNum != 0) {
-      stroke(255, xPos*1.2);
+      stroke(255, xPos);
       noFill();
       strokeWeight(ringNum);
       arc(xPos, yPos, size/0.9, size/3, 5*PI/6, 13*PI/6);
     }
     if (xPos==0) {
       pColor = color(randColor(), 175);
-      size = (float) (Math.random() * 10 + 15);
+      size = (float) (Math.random() * 10 + 10);
     }
   }
 }
 
 color randColor() {
-  return color((int) (Math.random()*150+50), (int) (Math.random()*150+50), (int) (Math.random()*150+50));
+  return color((int) (Math.random()*130+50), (int) (Math.random()*130+50), (int) (Math.random()*130+50));
 }
